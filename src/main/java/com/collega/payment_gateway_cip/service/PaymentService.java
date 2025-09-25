@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.util.Optional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,7 +37,7 @@ public class PaymentService {
     @Transactional
     public PaymentResponse createPayment(PaymentRequest request) {
         // Basic Validation
-        if (request.orderId() == null || request.orderId().isBlank()) {
+        if (request.orderId() == null || StringUtils.isBlank(request.orderId())) {
             return new PaymentResponse(null, null, "FAILED", null, null, "Order ID is required");
         }
         if (request.amount() == null || request.amount().doubleValue() <= 0) {
